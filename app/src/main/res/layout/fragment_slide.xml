@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+  <ImageView
+      android:id="@+id/photo"
+      android:layout_width="match_parent"
+      android:layout_height="0dp"
+      android:scaleType="centerCrop"
+      tools:ignore="Suspicious0dp"/>
+
+  <ScrollView
+      android:layout_width="match_parent"
+      android:layout_height="0dp"
+      android:layout_weight="1"
+      android:fillViewport="true">
+
+    <gallery.templates.contentful.ui.GalleryBottomView
+        android:id="@+id/bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:padding="24dp"
+        android:alpha="0"
+        android:orientation="vertical">
+
+      <TextView
+          android:id="@+id/title"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:textSize="36sp"
+          android:fontFamily="sans-serif-light"/>
+
+      <TextView
+          android:id="@+id/caption"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="18dp"
+          android:textSize="20sp"
+          android:lineSpacingMultiplier="1.2"/>
+
+    </gallery.templates.contentful.ui.GalleryBottomView>
+
+  </ScrollView>
+
+</LinearLayout>

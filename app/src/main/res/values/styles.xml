@@ -1,0 +1,26 @@
+<resources>
+  <style name="AppTheme.Base" parent="Theme.AppCompat.Light.DarkActionBar">
+    <item name="colorPrimary">@color/primary</item>
+    <item name="colorPrimaryDark">@color/primary</item>
+    <item name="colorAccent">@color/primary</item>
+    <item name="colorControlHighlight">@color/primary</item>
+  </style>
+
+  <style name="AppTheme.NoActionBar.Base" parent="Theme.AppCompat.Light.NoActionBar">
+    <item name="colorPrimary">@color/primary</item>
+    <item name="colorPrimaryDark">@color/primary</item>
+    <item name="colorAccent">@color/primary</item>
+    <item name="colorControlHighlight">@color/primary</item>
+  </style>
+
+  <style name="AppTheme.NoActionBar" parent="AppTheme.NoActionBar.Base">
+
+  </style>
+
+  <style name="AppTheme" parent="AppTheme.Base">
+
+  </style>
+
+  <style name="AppTheme.MainActivity" parent="AppTheme.NoActionBar">
+  </style>
+</resources>

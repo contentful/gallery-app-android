@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+  <style name="AppTheme" parent="AppTheme.Base">
+    <item name="android:navigationBarColor">@color/primary</item>
+    <item name="android:windowContentTransitions">true</item>
+    <item name="android:windowSharedElementEnterTransition">@transition/change_image_transform</item>
+    <item name="android:windowSharedElementReturnTransition">@null</item>
+  </style>
+
+  <style name="AppTheme.NoActionBar" parent="AppTheme.NoActionBar.Base">
+    <item name="android:navigationBarColor">@color/primary</item>
+    <item name="android:windowActionBarOverlay">false</item>
+    <item name="android:windowContentOverlay">@null</item>
+    <item name="android:windowContentTransitions">true</item>
+    <item name="android:windowAllowEnterTransitionOverlap">true</item>
+    <item name="android:windowAllowReturnTransitionOverlap">true</item>
+  </style>
+
+  <style name="AppTheme.GalleryActivity" parent="AppTheme.NoActionBar">
+    <item name="android:actionBarStyle">@style/GalleryActionBar</item>
+    <item name="android:windowTranslucentStatus">true</item>
+    <item name="android:windowTranslucentNavigation">true</item>
+  </style>
+
+  <style name="GalleryActionBar" parent="Base.ThemeOverlay.AppCompat.ActionBar">
+    <item name="android:background">@null</item>
+    <item name="android:displayOptions">homeAsUp</item>
+  </style>
+</resources>

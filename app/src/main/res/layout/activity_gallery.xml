@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+
+  <ImageView
+      android:id="@+id/photo"
+      android:transitionName="@string/gallery_photo_hero"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:scaleType="centerCrop"/>
+
+  <gallery.templates.contentful.ui.LockableViewPager
+      android:id="@+id/pager"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"/>
+
+  <FrameLayout
+      android:id="@+id/info_container"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:alpha="@integer/info_container_initial_alpha"
+      android:visibility="gone"/>
+
+  <gallery.templates.contentful.ui.FloatingActionButton
+      android:id="@+id/star"
+      android:layout_width="@dimen/fab_size"
+      android:layout_height="@dimen/fab_size"
+      android:src="@drawable/ic_fab_star"
+      android:background="@drawable/info_background"
+      android:layout_gravity="end"
+      android:layout_marginRight="16dp"
+      android:layout_marginEnd="16dp"
+      android:elevation="@dimen/button_elevation"
+      android:stateListAnimator="@anim/button_raise"
+      android:alpha="0"/>
+
+</merge>

@@ -1,0 +1,26 @@
+<resources>
+  <string name="app_name">Gallery Demo</string>
+
+  <!-- Error Dialog -->
+  <string name="dialog_general_error_title">Oops, something went wrong…</string>
+  <string name="dialog_general_error_message">Check your network connection and try again.</string>
+  <string name="dialog_unauthorized_error_message">Server returned 401 (unauthorized). Double check your space ID and access token.</string>
+
+  <!-- Menu -->
+  <string name="action_about">About</string>
+
+  <!-- About -->
+  <string name="about_btn_faq">FAQ</string>
+  <string name="about_btn_feedback">Send Feedback</string>
+  <string name="about_btn_contact">Contact</string>
+  <string name="about_btn_license">Licensing Information</string>
+
+  <!-- Contentful URLs -->
+  <string name="url_faq" formatted="false">https://support.contentful.com/hc/en-us/</string>
+  <string name="url_feedback" formatted="false">https://support.contentful.com/hc/en-us/requests/new/</string>
+  <string name="url_contact" formatted="false">https://support.contentful.com/hc/en-us/requests/new/</string>
+  <string name="url_licensing" formatted="false">http://www.apache.org/licenses/LICENSE-2.0</string>
+
+  <!-- Heroes! -->
+  <string name="gallery_photo_hero">gallery_photo_hero</string>
+</resources>

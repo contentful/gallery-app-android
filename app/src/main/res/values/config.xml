@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <!-- API Credentials -->
+  <string name="api_space_id">fbr4i5aajb0w</string>
+  <string name="api_access_token">bb7868adae619627d086f309f987e7765da1fc75336dea1f06c01dc959fc19a3</string>
+
+  <!-- Content Types -->
+  <string name="content_type_author">38nK0gXXIccQ2IEosyAg6C</string>
+  <string name="content_type_gallery">7leLzv8hW06amGmke86y8G</string>
+  <string name="content_type_image">1xYw5JsIecuGE68mmGMg20</string>
+
+  <!-- URL Interception -->
+  <string name="url_intercept_schema">contentful-gallery</string>
+</resources>

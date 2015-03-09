@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <integer name="gallery_grid_span_count">2</integer>
+  <integer name="cdn_asset_size">800</integer>
+  <integer name="toggle_animation_duration">300</integer>
+  <integer name="info_container_initial_alpha">0</integer>
+  <integer name="gallery_alpha_duration">200</integer>
+  <integer name="gallery_pager_offscreen_limit">2</integer>
+  <integer name="gallery_info_bg_alpha">0xE5</integer>
+  <integer name="toolbar_animation_duration">300</integer>
+</resources>

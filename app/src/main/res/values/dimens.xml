@@ -1,0 +1,5 @@
+<resources>
+  <dimen name="fab_size">44dp</dimen>
+  <dimen name="button_elevation">4dp</dimen>
+  <dimen name="button_press_elevation">8dp</dimen>
+</resources>
