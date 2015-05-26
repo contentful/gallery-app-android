@@ -11,14 +11,17 @@ import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import gallery.templates.contentful.R;
-import gallery.templates.contentful.dto.Gallery;
 import gallery.templates.contentful.lib.Intents;
+import gallery.templates.contentful.vault.Gallery;
+import org.parceler.Parcels;
 
 public class GalleryInfoFragment extends Fragment {
   private Gallery gallery;
 
   @InjectView(R.id.root) ViewGroup root;
+
   @InjectView(R.id.title) TextView title;
+
   @InjectView(R.id.description) TextView description;
 
   @Override public void onCreate(Bundle savedInstanceState) {
@@ -39,7 +42,7 @@ public class GalleryInfoFragment extends Fragment {
   }
 
   private void extractIntentArguments() {
-    gallery = getArguments().getParcelable(Intents.EXTRA_GALLERY);
+    gallery = Parcels.unwrap(getArguments().getParcelable(Intents.EXTRA_GALLERY));
   }
 
   private void initializeViews() {

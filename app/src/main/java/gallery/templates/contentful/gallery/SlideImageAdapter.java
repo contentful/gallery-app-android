@@ -6,7 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import com.squareup.picasso.Picasso;
-import gallery.templates.contentful.dto.Image;
+import gallery.templates.contentful.lib.Utils;
+import gallery.templates.contentful.vault.Image;
 import java.util.List;
 
 public class SlideImageAdapter extends PagerAdapter {
@@ -28,7 +29,7 @@ public class SlideImageAdapter extends PagerAdapter {
     Context context = container.getContext();
     ImageView imageView = new ImageView(context);
     imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-    Picasso.with(context).load(images.get(position).photoUrl()).into(imageView);
+    Picasso.with(context).load(Utils.imageUrl(images.get(position).photo().url())).into(imageView);
     container.addView(imageView);
     return imageView;
   }

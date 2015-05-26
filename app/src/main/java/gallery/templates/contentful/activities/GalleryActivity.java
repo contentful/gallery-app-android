@@ -14,7 +14,8 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.RippleDrawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.transition.Transition;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,36 +25,44 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 import butterknife.OnPageChange;
-import gallery.templates.contentful.lib.Holder;
 import gallery.templates.contentful.R;
-import gallery.templates.contentful.dto.Gallery;
-import gallery.templates.contentful.dto.Image;
 import gallery.templates.contentful.fragments.GalleryInfoFragment;
 import gallery.templates.contentful.fragments.SlideFragment;
 import gallery.templates.contentful.gallery.SlideFragmentAdapter;
 import gallery.templates.contentful.gallery.SlideImageAdapter;
 import gallery.templates.contentful.lib.Const;
+import gallery.templates.contentful.lib.Holder;
 import gallery.templates.contentful.lib.Intents;
 import gallery.templates.contentful.lib.TransitionListenerAdapter;
 import gallery.templates.contentful.lib.Utils;
 import gallery.templates.contentful.ui.FloatingActionButton;
 import gallery.templates.contentful.ui.LockableViewPager;
 import gallery.templates.contentful.ui.ViewUtils;
+import gallery.templates.contentful.vault.Gallery;
+import gallery.templates.contentful.vault.Image;
+import org.parceler.Parcels;
 
-public class GalleryActivity extends FragmentActivity {
-  private static final ArgbEvaluator argbEvaluator = new ArgbEvaluator();
+public class GalleryActivity extends AppCompatActivity {
+  private static final ArgbEvaluator EVALUATOR = new ArgbEvaluator();
 
   private SlideImageAdapter imageAdapter;
+
   private SlideFragmentAdapter fragmentAdapter;
+
   private GalleryInfoFragment galleryInfoFragment;
+
   private BroadcastReceiver colorizeReceiver;
 
   private Gallery gallery;
+
   private Image image;
 
   @InjectView(R.id.photo) ImageView photo;
+
   @InjectView(R.id.star) FloatingActionButton star;
+
   @InjectView(R.id.pager) LockableViewPager viewPager;
+
   @InjectView(R.id.info_container) ViewGroup infoContainer;
 
   @TargetApi(Build.VERSION_CODES.LOLLIPOP)
@@ -118,10 +127,10 @@ public class GalleryActivity extends FragmentActivity {
       int leftDarkMuted = leftFragment.getColorDarkMuted();
       int rightDarkMuted = rightFragment.getColorDarkMuted();
 
-      int vibrant = (Integer) argbEvaluator.evaluate(
+      int vibrant = (Integer) EVALUATOR.evaluate(
           positionOffset, leftVibrant, rightVibrant);
 
-      int darkMuted = (Integer) argbEvaluator.evaluate(
+      int darkMuted = (Integer) EVALUATOR.evaluate(
           positionOffset, leftDarkMuted, rightDarkMuted);
 
       colorizeButton(vibrant, darkMuted);
@@ -165,8 +174,8 @@ public class GalleryActivity extends FragmentActivity {
 
   private void extractIntentArguments() {
     Intent intent = getIntent();
-    gallery = intent.getParcelableExtra(Intents.EXTRA_GALLERY);
-    image = intent.getParcelableExtra(Intents.EXTRA_IMAGE);
+    gallery = Parcels.unwrap(intent.getParcelableExtra(Intents.EXTRA_GALLERY));
+    image = Parcels.unwrap(intent.getParcelableExtra(Intents.EXTRA_IMAGE));
   }
 
   private void createAdapterInstances() {
@@ -232,7 +241,7 @@ public class GalleryActivity extends FragmentActivity {
 
   @TargetApi(Build.VERSION_CODES.LOLLIPOP)
   private void colorizeButton(int colorNormal, int colorPressed) {
-    Drawable drawable = getResources().getDrawable(R.drawable.info_background);
+    Drawable drawable = ContextCompat.getDrawable(this, R.drawable.info_background);
     drawable.setColorFilter(colorNormal, PorterDuff.Mode.MULTIPLY);
 
     if (Const.HAS_L) {
@@ -256,7 +265,7 @@ public class GalleryActivity extends FragmentActivity {
       if (colorizeReceiver == null) {
         colorizeReceiver = new BroadcastReceiver() {
           @Override public void onReceive(Context context, Intent intent) {
-            Image image = intent.getParcelableExtra(Intents.EXTRA_IMAGE);
+            Image image = Parcels.unwrap(intent.getParcelableExtra(Intents.EXTRA_IMAGE));
             int vibrant = intent.getIntExtra(Intents.EXTRA_CLR_VIBRANT, 0);
             int darkMuted = intent.getIntExtra(Intents.EXTRA_CLR_DARK_MUTED, 0);
             colorize(image, vibrant, darkMuted);

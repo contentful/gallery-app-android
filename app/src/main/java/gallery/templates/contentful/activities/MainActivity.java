@@ -2,7 +2,6 @@ package gallery.templates.contentful.activities;
 
 import android.annotation.TargetApi;
 import android.app.ActivityOptions;
-import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -15,7 +14,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Display;
@@ -25,24 +24,25 @@ import android.view.View;
 import android.view.WindowManager;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import com.contentful.vault.Vault;
 import gallery.templates.contentful.App;
-import gallery.templates.contentful.lib.Holder;
 import gallery.templates.contentful.R;
-import gallery.templates.contentful.dto.Gallery;
-import gallery.templates.contentful.dto.Image;
 import gallery.templates.contentful.gallery.GalleryAdapter;
 import gallery.templates.contentful.lib.Const;
+import gallery.templates.contentful.lib.Holder;
 import gallery.templates.contentful.lib.Intents;
 import gallery.templates.contentful.lib.LoaderId;
+import gallery.templates.contentful.lib.Utils;
 import gallery.templates.contentful.loaders.GalleryListLoader;
-import gallery.templates.contentful.sync.SyncService;
 import gallery.templates.contentful.ui.AnimativeToolBar;
-import java.net.HttpURLConnection;
+import gallery.templates.contentful.vault.Gallery;
+import gallery.templates.contentful.vault.Image;
 import java.util.List;
+import org.parceler.Parcels;
 
 import static gallery.templates.contentful.gallery.GalleryAdapter.ItemViewHolder;
 
-public class MainActivity extends ActionBarActivity
+public class MainActivity extends AppCompatActivity
     implements LoaderManager.LoaderCallbacks<List<Gallery>> {
 
   private static final int GRID_SPAN_COUNT =
@@ -51,12 +51,15 @@ public class MainActivity extends ActionBarActivity
   private static final int LOADER_ID = LoaderId.forClass(MainActivity.class);
 
   private GalleryAdapter adapter;
+
   private GridLayoutManager layoutManager;
+
   private BroadcastReceiver reloadReceiver;
-  private BroadcastReceiver errorReceiver;
 
   @InjectView(R.id.toolbar) AnimativeToolBar toolbar;
+
   @InjectView(R.id.swipe_refresh) SwipeRefreshLayout swipeRefreshLayout;
+
   @InjectView(R.id.recycler) RecyclerView recyclerView;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
@@ -75,12 +78,10 @@ public class MainActivity extends ActionBarActivity
 
   @Override protected void onResume() {
     super.onResume();
-    setupErrorReceiver(true);
     Holder.set(null);
   }
 
   @Override protected void onPause() {
-    setupErrorReceiver(false);
     super.onPause();
   }
 
@@ -127,7 +128,7 @@ public class MainActivity extends ActionBarActivity
   private void initSwipeRefresh() {
     swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
       @Override public void onRefresh() {
-        SyncService.sync();
+        App.requestSync();
       }
     });
   }
@@ -142,41 +143,10 @@ public class MainActivity extends ActionBarActivity
         };
       }
 
-      registerReceiver(reloadReceiver, new IntentFilter(Intents.ACTION_RELOAD));
+      registerReceiver(reloadReceiver, new IntentFilter(Vault.ACTION_SYNC_COMPLETE));
     } else {
       unregisterReceiver(reloadReceiver);
     }
-  }
-
-  private void setupErrorReceiver(boolean register) {
-    if (register) {
-      if (errorReceiver == null) {
-        errorReceiver = new BroadcastReceiver() {
-          @Override public void onReceive(Context context, Intent intent) {
-            showErrorDialog(intent.getIntExtra(Intents.EXTRA_STATUS_CODE, -1));
-          }
-        };
-      }
-
-      registerReceiver(errorReceiver, new IntentFilter(Intents.ACTION_SHOW_ERROR));
-    } else {
-      unregisterReceiver(errorReceiver);
-    }
-  }
-
-  private void showErrorDialog(int httpStatusCode) {
-    int title = R.string.dialog_general_error_title;
-    int message = R.string.dialog_general_error_message;
-
-    if (httpStatusCode == HttpURLConnection.HTTP_UNAUTHORIZED) {
-      message = R.string.dialog_unauthorized_error_message;
-    }
-
-    new AlertDialog.Builder(this)
-        .setTitle(title)
-        .setMessage(message)
-        .setPositiveButton(android.R.string.ok, null)
-        .show();
   }
 
   private void initRecycler() {
@@ -185,7 +155,7 @@ public class MainActivity extends ActionBarActivity
     recyclerView.setHasFixedSize(true);
     recyclerView.setLayoutManager(layoutManager);
     recyclerView.setAdapter(adapter);
-    recyclerView.setOnScrollListener(createRecyclerScrollListener());
+    recyclerView.addOnScrollListener(createRecyclerScrollListener());
   }
 
   private void createLayoutManager() {
@@ -199,17 +169,17 @@ public class MainActivity extends ActionBarActivity
   }
 
   private void createAdapter() {
-    adapter = new GalleryAdapter(createAdapterClickListener());
+    int imageSize = Utils.getDisplayDimensions(this).x / GRID_SPAN_COUNT;
+    adapter = new GalleryAdapter(createAdapterClickListener(), imageSize);
   }
 
   @TargetApi(Build.VERSION_CODES.LOLLIPOP)
   private void onClickImage(ItemViewHolder holder, Gallery gallery, Image image) {
     Intent intent = new Intent(this, GalleryActivity.class)
-        .putExtra(Intents.EXTRA_GALLERY, gallery)
-        .putExtra(Intents.EXTRA_IMAGE, image);
+        .putExtra(Intents.EXTRA_GALLERY, Parcels.wrap(gallery))
+        .putExtra(Intents.EXTRA_IMAGE, Parcels.wrap(image));
 
     Bundle options = null;
-
     if (Const.HAS_L) {
       Drawable drawable = holder.photo.getDrawable();
       if (drawable != null) {
@@ -237,7 +207,7 @@ public class MainActivity extends ActionBarActivity
   private View.OnClickListener createAdapterClickListener() {
     return new View.OnClickListener() {
       @Override public void onClick(View v) {
-        int position = recyclerView.getChildPosition(v);
+        int position = recyclerView.getChildAdapterPosition(v);
         int viewType = adapter.getItemViewType(position);
         RecyclerView.ViewHolder viewHolder = recyclerView.getChildViewHolder(v);
         Object item = adapter.getItem(position);
