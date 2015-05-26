@@ -46,7 +46,6 @@
           android:value=".activities.MainActivity"/>
     </activity>
 
-    <service android:name=".sync.SyncService"/>
   </application>
 
 </manifest>

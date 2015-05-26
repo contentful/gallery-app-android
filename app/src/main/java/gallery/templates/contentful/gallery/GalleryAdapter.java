@@ -10,22 +10,30 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import com.squareup.picasso.Picasso;
 import gallery.templates.contentful.R;
-import gallery.templates.contentful.dto.Gallery;
-import gallery.templates.contentful.dto.Image;
+import gallery.templates.contentful.lib.Utils;
+import gallery.templates.contentful.vault.Gallery;
+import gallery.templates.contentful.vault.Image;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class GalleryAdapter extends RecyclerView.Adapter {
   public static final int VIEW_TYPE_SECTION = R.layout.grid_section;
+
   public static final int VIEW_TYPE_ITEM = R.layout.grid_item;
 
-  private final HashMap<Integer, Gallery> sections;
+  private final Map<Integer, Gallery> sections;
+
   private final ArrayList<Object> data;
+
   private final View.OnClickListener itemClickListener;
 
-  public GalleryAdapter(View.OnClickListener itemClickListener) {
+  private final int imageSize;
+
+  public GalleryAdapter(View.OnClickListener itemClickListener, int imageSize) {
     this.itemClickListener = itemClickListener;
+    this.imageSize = imageSize;
     sections = new HashMap<>();
     data = new ArrayList<>();
   }
@@ -100,16 +108,16 @@ public class GalleryAdapter extends RecyclerView.Adapter {
   private void onBindSection(SectionViewHolder holder, int position) {
     Gallery gallery = (Gallery) data.get(position);
     holder.title.setText(gallery.title());
-    loadPhoto(holder.cover, gallery.coverImageUrl());
+    loadPhoto(holder.cover, gallery.coverImage().url());
   }
 
   private void onBindItem(ItemViewHolder holder, int position) {
-    loadPhoto(holder.photo, ((Image) data.get(position)).photoUrl());
+    loadPhoto(holder.photo, ((Image) data.get(position)).photo().url());
   }
 
   private void loadPhoto(ImageView imageView, String url) {
     Picasso.with(imageView.getContext())
-        .load(url)
+        .load(Utils.imageUrl(url, imageSize, imageSize))
         .fit()
         .centerCrop()
         .placeholder(R.drawable.grid_placeholder)
@@ -117,8 +125,9 @@ public class GalleryAdapter extends RecyclerView.Adapter {
   }
 
   public static class ItemViewHolder extends RecyclerView.ViewHolder {
-    public @InjectView(R.id.photo) ImageView photo;
     public final View rootView;
+
+    public @InjectView(R.id.photo) ImageView photo;
 
     ItemViewHolder(View itemView) {
       super(itemView);
@@ -128,9 +137,11 @@ public class GalleryAdapter extends RecyclerView.Adapter {
   }
 
   public static class SectionViewHolder extends RecyclerView.ViewHolder {
-    public @InjectView(R.id.title) TextView title;
-    public @InjectView(R.id.cover) ImageView cover;
     public final View rootView;
+
+    public @InjectView(R.id.title) TextView title;
+
+    public @InjectView(R.id.cover) ImageView cover;
 
     SectionViewHolder(View itemView) {
       super(itemView);

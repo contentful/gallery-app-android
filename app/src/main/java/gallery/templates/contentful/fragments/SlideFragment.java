@@ -18,31 +18,42 @@ import butterknife.InjectView;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 import gallery.templates.contentful.R;
-import gallery.templates.contentful.dto.Image;
 import gallery.templates.contentful.lib.Const;
 import gallery.templates.contentful.lib.Intents;
 import gallery.templates.contentful.lib.TargetAdapter;
+import gallery.templates.contentful.lib.Utils;
 import gallery.templates.contentful.ui.ViewUtils;
+import gallery.templates.contentful.vault.Image;
+import org.parceler.Parcels;
 
 public class SlideFragment extends Fragment implements Palette.PaletteAsyncListener {
   private Image image;
+
   private AsyncTask paletteTask;
+
   private Target target;
+
   private Bitmap bitmap;
 
   private boolean hasPalette;
+
   private int colorLightMuted;
+
   private int colorDarkMuted;
+
   private int colorVibrant;
 
   @InjectView(R.id.photo) ImageView photo;
+
   @InjectView(R.id.bottom) ViewGroup bottomContainer;
+
   @InjectView(R.id.title) TextView title;
+
   @InjectView(R.id.caption) TextView caption;
 
   public static SlideFragment newSlide(Context context, Image image) {
     Bundle b = new Bundle();
-    b.putParcelable(Intents.EXTRA_IMAGE, image);
+    b.putParcelable(Intents.EXTRA_IMAGE, Parcels.wrap(image));
     return (SlideFragment) SlideFragment.instantiate(context, SlideFragment.class.getName(), b);
   }
 
@@ -98,7 +109,7 @@ public class SlideFragment extends Fragment implements Palette.PaletteAsyncListe
 
   private void extractIntentArguments() {
     Bundle b = getArguments();
-    image = b.getParcelable(Intents.EXTRA_IMAGE);
+    image = Parcels.unwrap(b.getParcelable(Intents.EXTRA_IMAGE));
   }
 
   private void cancelPaletteTask() {
@@ -109,8 +120,9 @@ public class SlideFragment extends Fragment implements Palette.PaletteAsyncListe
   }
 
   private void sendPalette() {
-    getActivity().sendBroadcast(
-        attachColors(new Intent(Intents.ACTION_COLORIZE).putExtra(Intents.EXTRA_IMAGE, image)));
+    getActivity().sendBroadcast(attachColors(
+        new Intent(Intents.ACTION_COLORIZE)
+            .putExtra(Intents.EXTRA_IMAGE, Parcels.wrap(image))));
   }
 
   private Intent attachColors(Intent intent) {
@@ -137,14 +149,16 @@ public class SlideFragment extends Fragment implements Palette.PaletteAsyncListe
   }
 
   private void displayPhoto() {
-    Picasso.with(getActivity()).load(image.photoUrl())
+    Picasso.with(getActivity()).load(Utils.imageUrl(image.photo().url()))
         .resize(Const.IMAGE_WIDTH, Const.IMAGE_HEIGHT)
         .centerCrop()
         .into(target = new TargetAdapter() {
           @Override public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
             SlideFragment.this.bitmap = bitmap;
             applyImage();
-            paletteTask = Palette.generateAsync(bitmap, SlideFragment.this);
+            paletteTask = new Palette.Builder(bitmap)
+                .maximumColorCount(32)
+                .generate(SlideFragment.this);
           }
         });
   }

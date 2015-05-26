@@ -4,14 +4,16 @@ import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import gallery.templates.contentful.dto.Gallery;
-import gallery.templates.contentful.dto.Image;
 import gallery.templates.contentful.fragments.SlideFragment;
+import gallery.templates.contentful.vault.Gallery;
+import gallery.templates.contentful.vault.Image;
 import java.util.HashMap;
+import java.util.Map;
 
 public class SlideFragmentAdapter extends FragmentPagerAdapter {
   private final Gallery data;
-  private final HashMap<Image, Fragment> fragments;
+
+  private final Map<Image, Fragment> fragments;
 
   public SlideFragmentAdapter(Context context, FragmentManager fm, Gallery gallery) {
     super(fm);

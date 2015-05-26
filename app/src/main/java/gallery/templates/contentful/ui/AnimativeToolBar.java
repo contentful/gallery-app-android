@@ -8,6 +8,7 @@ import gallery.templates.contentful.R;
 
 public class AnimativeToolBar extends Toolbar {
   private boolean visible = true;
+
   private ValueAnimator animator;
 
   public AnimativeToolBar(Context context) {

@@ -1,8 +1,9 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.neenbedankt.android-apt'
 
 android {
-  compileSdkVersion 21
-  buildToolsVersion "21.1.2"
+  compileSdkVersion 22
+  buildToolsVersion "22.0.1"
 
   packagingOptions {
     exclude 'META-INF/services/javax.annotation.processing.Processor'
@@ -12,9 +13,9 @@ android {
   defaultConfig {
     applicationId "gallery.templates.contentful"
     minSdkVersion 14
-    targetSdkVersion 21
-    versionCode 1
-    versionName "1.0"
+    targetSdkVersion 22
+    versionCode 2
+    versionName "1.1"
   }
   buildTypes {
     release {
@@ -26,16 +27,18 @@ android {
 
 dependencies {
   compile fileTree(dir: 'libs', include: ['*.jar'])
-  compile 'com.android.support:appcompat-v7:21.0.3'
-  compile 'com.android.support:recyclerview-v7:21.0.3'
-  compile 'com.android.support:cardview-v7:21.0.3'
-  compile 'com.android.support:palette-v7:21.0.3'
-  compile 'io.realm:realm-android:0.79.1'
-  compile 'com.google.auto.value:auto-value:1.0'
-  compile 'javax.annotation:jsr250-api:1.0'
-  compile 'com.contentful.java:java-sdk:2.0.1'
-  compile 'com.squareup.okhttp:okhttp:2.2.0'
-  compile 'com.squareup.okhttp:okhttp-urlconnection:2.2.0'
+  compile 'com.android.support:appcompat-v7:22.1.1'
+  compile 'com.android.support:recyclerview-v7:22.1.1'
+  compile 'com.android.support:cardview-v7:22.1.1'
+  compile 'com.android.support:palette-v7:22.1.1'
+  compile 'com.squareup.okhttp:okhttp:2.3.0'
+  compile 'com.squareup.okhttp:okhttp-urlconnection:2.3.0'
   compile 'com.jakewharton:butterknife:6.1.0'
   compile 'com.squareup.picasso:picasso:2.4.0'
+
+  apt 'com.contentful.vault:compiler:0.9.3'
+  compile 'com.contentful.vault:core:0.9.3'
+
+  apt 'org.parceler:parceler:1.0.0'
+  compile 'org.parceler:parceler-api:1.0.0'
 }
