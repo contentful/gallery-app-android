@@ -14,7 +14,7 @@ This is an Android application example for the [Contentful][1] gallery space tem
 
 - Create a space with the "Gallery" space template on [Contentful][1]
 - Clone this repo
-- Enter your Delivery API credentials in the **app/src/main/res/values/config.xml** file
+- Enter your Delivery API credentials in the [Const.java][const] file
 - \o/
 
 ## License
@@ -24,3 +24,4 @@ Copyright (c) 2015 Contentful GmbH. See [LICENSE][2] for further details.
 
 [1]: https://www.contentful.com
 [2]: LICENSE
+[const]: app/src/main/java/gallery/templates/contentful/lib/Const.java
