@@ -23,4 +23,8 @@
 
   <style name="AppTheme.MainActivity" parent="AppTheme.NoActionBar">
   </style>
+
+  <style name="AppTheme.GalleryActivity" parent="AppTheme.NoActionBar">
+    <item name="android:actionBarStyle">@style/GalleryActionBar</item>
+  </style>
 </resources>
