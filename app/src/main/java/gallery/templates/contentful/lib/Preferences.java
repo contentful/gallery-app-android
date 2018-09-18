@@ -2,6 +2,7 @@ package gallery.templates.contentful.lib;
 
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+
 import gallery.templates.contentful.App;
 
 public class Preferences {

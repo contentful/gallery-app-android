@@ -1,22 +1,25 @@
 package gallery.templates.contentful.gallery;
 
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.ButterKnife;
-import butterknife.InjectView;
+
 import com.squareup.picasso.Picasso;
-import gallery.templates.contentful.R;
-import gallery.templates.contentful.lib.Utils;
-import gallery.templates.contentful.vault.Gallery;
-import gallery.templates.contentful.vault.Image;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import androidx.recyclerview.widget.RecyclerView;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import gallery.templates.contentful.R;
+import gallery.templates.contentful.lib.Utils;
+import gallery.templates.contentful.vault.Gallery;
+import gallery.templates.contentful.vault.Image;
 
 public class GalleryAdapter extends RecyclerView.Adapter {
   public static final int VIEW_TYPE_SECTION = R.layout.grid_section;
@@ -116,7 +119,7 @@ public class GalleryAdapter extends RecyclerView.Adapter {
   }
 
   private void loadPhoto(ImageView imageView, String url) {
-    Picasso.with(imageView.getContext())
+    Picasso.get()
         .load(Utils.imageUrl(url, imageSize, imageSize))
         .fit()
         .centerCrop()
@@ -127,26 +130,26 @@ public class GalleryAdapter extends RecyclerView.Adapter {
   public static class ItemViewHolder extends RecyclerView.ViewHolder {
     public final View rootView;
 
-    public @InjectView(R.id.photo) ImageView photo;
+    public @BindView(R.id.photo) ImageView photo;
 
     ItemViewHolder(View itemView) {
       super(itemView);
       this.rootView = itemView;
-      ButterKnife.inject(this, itemView);
+      ButterKnife.bind(this, itemView);
     }
   }
 
   public static class SectionViewHolder extends RecyclerView.ViewHolder {
     public final View rootView;
 
-    public @InjectView(R.id.title) TextView title;
+    public @BindView(R.id.title) TextView title;
 
-    public @InjectView(R.id.cover) ImageView cover;
+    public @BindView(R.id.cover) ImageView cover;
 
     SectionViewHolder(View itemView) {
       super(itemView);
       this.rootView = itemView;
-      ButterKnife.inject(this, itemView);
+      ButterKnife.bind(this, itemView);
     }
   }
 }

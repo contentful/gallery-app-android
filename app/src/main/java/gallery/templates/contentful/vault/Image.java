@@ -4,8 +4,10 @@ import com.contentful.vault.Asset;
 import com.contentful.vault.ContentType;
 import com.contentful.vault.Field;
 import com.contentful.vault.Resource;
-import gallery.templates.contentful.lib.Const;
+
 import org.parceler.Parcel;
+
+import gallery.templates.contentful.lib.Const;
 
 @Parcel
 @ContentType(Const.CONTENT_TYPE_IMAGE)

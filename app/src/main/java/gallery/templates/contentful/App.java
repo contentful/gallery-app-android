@@ -1,8 +1,10 @@
 package gallery.templates.contentful;
 
 import android.app.Application;
+
 import com.contentful.vault.SyncConfig;
 import com.contentful.vault.Vault;
+
 import gallery.templates.contentful.lib.ClientProvider;
 import gallery.templates.contentful.vault.GallerySpace;
 

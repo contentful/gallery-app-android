@@ -3,15 +3,15 @@ package gallery.templates.contentful.ui;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
-import android.annotation.TargetApi;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
-import android.support.annotation.Nullable;
 import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.Interpolator;
+
+import androidx.annotation.Nullable;
 
 public class ViewUtils {
   private static final float INTERPOLATOR_FACTOR = 2.0f;
@@ -40,7 +40,8 @@ public class ViewUtils {
     }
   }
 
-  public static Animator toggleViewFade(final View target, final boolean show, int duration,
+  public static Animator toggleViewFade(
+      final View target, final boolean show, int duration,
       @Nullable final Runnable startRunnable, @Nullable final Runnable endRunnable) {
 
     Animator animator;
@@ -73,9 +74,8 @@ public class ViewUtils {
     return animator;
   }
 
-  @TargetApi(Build.VERSION_CODES.LOLLIPOP)
   public static Animator toggleViewCircular(View source, final View target, final boolean show,
-      float radius, int duration, @Nullable final Runnable startRunnable, @Nullable final Runnable endRunnable) {
+                                            float radius, int duration, @Nullable final Runnable startRunnable, @Nullable final Runnable endRunnable) {
 
     Animator animator;
 

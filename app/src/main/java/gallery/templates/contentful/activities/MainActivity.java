@@ -1,6 +1,5 @@
 package gallery.templates.contentful.activities;
 
-import android.annotation.TargetApi;
 import android.app.ActivityOptions;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -8,23 +7,28 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Point;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.Loader;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
-import butterknife.ButterKnife;
-import butterknife.InjectView;
+
 import com.contentful.vault.Vault;
+
+import org.parceler.Parcels;
+
+import java.util.List;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.loader.app.LoaderManager;
+import androidx.loader.content.Loader;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import gallery.templates.contentful.App;
 import gallery.templates.contentful.R;
 import gallery.templates.contentful.gallery.GalleryAdapter;
@@ -37,16 +41,13 @@ import gallery.templates.contentful.loaders.GalleryListLoader;
 import gallery.templates.contentful.ui.AnimativeToolBar;
 import gallery.templates.contentful.vault.Gallery;
 import gallery.templates.contentful.vault.Image;
-import java.util.List;
-import org.parceler.Parcels;
 
 import static gallery.templates.contentful.gallery.GalleryAdapter.ItemViewHolder;
 
 public class MainActivity extends AppCompatActivity
     implements LoaderManager.LoaderCallbacks<List<Gallery>> {
 
-  private static final int GRID_SPAN_COUNT =
-      App.get().getResources().getInteger(R.integer.gallery_grid_span_count);
+  private static final int GRID_SPAN_COUNT = App.get().getResources().getInteger(R.integer.gallery_grid_span_count);
 
   private static final int LOADER_ID = LoaderId.forClass(MainActivity.class);
 
@@ -56,16 +57,16 @@ public class MainActivity extends AppCompatActivity
 
   private BroadcastReceiver reloadReceiver;
 
-  @InjectView(R.id.toolbar) AnimativeToolBar toolbar;
+  @BindView(R.id.toolbar) AnimativeToolBar toolbar;
 
-  @InjectView(R.id.swipe_refresh) SwipeRefreshLayout swipeRefreshLayout;
+  @BindView(R.id.swipe_refresh) SwipeRefreshLayout swipeRefreshLayout;
 
-  @InjectView(R.id.recycler) RecyclerView recyclerView;
+  @BindView(R.id.recycler) RecyclerView recyclerView;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
-    ButterKnife.inject(this);
+    ButterKnife.bind(this);
 
     setSupportActionBar(toolbar);
     calculateImageHeight();
@@ -107,7 +108,7 @@ public class MainActivity extends AppCompatActivity
   }
 
   @Override public Loader<List<Gallery>> onCreateLoader(int id, Bundle args) {
-    return new GalleryListLoader();
+    return new GalleryListLoader(getApplicationContext());
   }
 
   @Override public void onLoadFinished(Loader<List<Gallery>> loader, final List<Gallery> data) {
@@ -173,7 +174,6 @@ public class MainActivity extends AppCompatActivity
     adapter = new GalleryAdapter(createAdapterClickListener(), imageSize);
   }
 
-  @TargetApi(Build.VERSION_CODES.LOLLIPOP)
   private void onClickImage(ItemViewHolder holder, Gallery gallery, Image image) {
     Intent intent = new Intent(this, GalleryActivity.class)
         .putExtra(Intents.EXTRA_GALLERY, Parcels.wrap(gallery))

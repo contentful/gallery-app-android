@@ -1,6 +1,7 @@
 package gallery.templates.contentful.lib;
 
 import android.os.Build;
+
 import gallery.templates.contentful.App;
 import gallery.templates.contentful.R;
 

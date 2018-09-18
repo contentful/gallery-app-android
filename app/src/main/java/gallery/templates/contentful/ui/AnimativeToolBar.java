@@ -2,8 +2,9 @@ package gallery.templates.contentful.ui;
 
 import android.animation.ValueAnimator;
 import android.content.Context;
-import android.support.v7.widget.Toolbar;
 import android.util.AttributeSet;
+
+import androidx.appcompat.widget.Toolbar;
 import gallery.templates.contentful.R;
 
 public class AnimativeToolBar extends Toolbar {

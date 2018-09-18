@@ -1,12 +1,9 @@
 package gallery.templates.contentful.ui;
 
-import android.annotation.TargetApi;
 import android.content.Context;
-import android.os.Build;
 import android.util.AttributeSet;
 import android.widget.LinearLayout;
 
-@TargetApi(Build.VERSION_CODES.LOLLIPOP)
 public class GalleryBottomView extends LinearLayout {
   public GalleryBottomView(Context context) {
     super(context);
