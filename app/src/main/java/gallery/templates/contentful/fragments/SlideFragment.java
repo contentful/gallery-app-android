@@ -5,18 +5,22 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v7.graphics.Palette;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import butterknife.ButterKnife;
-import butterknife.InjectView;
+
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
+
+import org.parceler.Parcels;
+
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.palette.graphics.Palette;
+import butterknife.ButterKnife;
+import butterknife.BindView;
 import gallery.templates.contentful.R;
 import gallery.templates.contentful.lib.Const;
 import gallery.templates.contentful.lib.Intents;
@@ -24,7 +28,6 @@ import gallery.templates.contentful.lib.TargetAdapter;
 import gallery.templates.contentful.lib.Utils;
 import gallery.templates.contentful.ui.ViewUtils;
 import gallery.templates.contentful.vault.Image;
-import org.parceler.Parcels;
 
 public class SlideFragment extends Fragment implements Palette.PaletteAsyncListener {
   private Image image;
@@ -43,13 +46,13 @@ public class SlideFragment extends Fragment implements Palette.PaletteAsyncListe
 
   private int colorVibrant;
 
-  @InjectView(R.id.photo) ImageView photo;
+  @BindView(R.id.photo) ImageView photo;
 
-  @InjectView(R.id.bottom) ViewGroup bottomContainer;
+  @BindView(R.id.bottom) ViewGroup bottomContainer;
 
-  @InjectView(R.id.title) TextView title;
+  @BindView(R.id.title) TextView title;
 
-  @InjectView(R.id.caption) TextView caption;
+  @BindView(R.id.caption) TextView caption;
 
   public static SlideFragment newSlide(Context context, Image image) {
     Bundle b = new Bundle();
@@ -71,7 +74,7 @@ public class SlideFragment extends Fragment implements Palette.PaletteAsyncListe
 
   @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
-    ButterKnife.inject(this, view);
+    ButterKnife.bind(this, view);
     ViewUtils.setViewHeight(photo, Const.IMAGE_HEIGHT, true);
     title.setText(image.title());
     caption.setText(image.caption());
@@ -79,15 +82,10 @@ public class SlideFragment extends Fragment implements Palette.PaletteAsyncListe
     applyImage();
   }
 
-  @Override public void onDestroyView() {
-    ButterKnife.reset(this);
-    super.onDestroyView();
-  }
-
   @Override public void onDestroy() {
     cancelPaletteTask();
     if (target != null) {
-      Picasso.with(getActivity()).cancelRequest(target);
+      Picasso.get().cancelRequest(target);
       target = null;
     }
 
@@ -149,7 +147,7 @@ public class SlideFragment extends Fragment implements Palette.PaletteAsyncListe
   }
 
   private void displayPhoto() {
-    Picasso.with(getActivity()).load(Utils.imageUrl(image.photo().url()))
+    Picasso.get().load(Utils.imageUrl(image.photo().url()))
         .resize(Const.IMAGE_WIDTH, Const.IMAGE_HEIGHT)
         .centerCrop()
         .into(target = new TargetAdapter() {

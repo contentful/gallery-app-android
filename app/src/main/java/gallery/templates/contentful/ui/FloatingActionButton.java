@@ -1,16 +1,14 @@
 package gallery.templates.contentful.ui;
 
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.Outline;
-import android.os.Build;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewOutlineProvider;
 import android.widget.ImageButton;
+
 import gallery.templates.contentful.lib.Const;
 
-@TargetApi(Build.VERSION_CODES.LOLLIPOP)
 public class FloatingActionButton extends ImageButton {
   public FloatingActionButton(Context context) {
     super(context);
@@ -25,7 +23,7 @@ public class FloatingActionButton extends ImageButton {
   }
 
   public FloatingActionButton(Context context, AttributeSet attrs, int defStyleAttr,
-      int defStyleRes) {
+                              int defStyleRes) {
     super(context, attrs, defStyleAttr, defStyleRes);
   }
 

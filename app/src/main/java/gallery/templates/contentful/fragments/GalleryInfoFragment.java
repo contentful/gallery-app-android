@@ -2,27 +2,29 @@ package gallery.templates.contentful.fragments;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import org.parceler.Parcels;
+
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import gallery.templates.contentful.R;
 import gallery.templates.contentful.lib.Intents;
 import gallery.templates.contentful.vault.Gallery;
-import org.parceler.Parcels;
 
 public class GalleryInfoFragment extends Fragment {
   private Gallery gallery;
 
-  @InjectView(R.id.root) ViewGroup root;
+  @BindView(R.id.root) ViewGroup root;
 
-  @InjectView(R.id.title) TextView title;
+  @BindView(R.id.title) TextView title;
 
-  @InjectView(R.id.description) TextView description;
+  @BindView(R.id.description) TextView description;
 
   @Override public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -30,14 +32,14 @@ public class GalleryInfoFragment extends Fragment {
   }
 
   @Override public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
-      @Nullable Bundle savedInstanceState) {
+                                     @Nullable Bundle savedInstanceState) {
     super.onCreateView(inflater, container, savedInstanceState);
     return inflater.inflate(R.layout.fragment_gallery_info, container, false);
   }
 
   @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
-    ButterKnife.inject(this, view);
+    ButterKnife.bind(this, view);
     initializeViews();
   }
 

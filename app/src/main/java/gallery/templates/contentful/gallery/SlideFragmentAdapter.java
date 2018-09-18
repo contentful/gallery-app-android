@@ -1,14 +1,16 @@
 package gallery.templates.contentful.gallery;
 
 import android.content.Context;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
 import gallery.templates.contentful.fragments.SlideFragment;
 import gallery.templates.contentful.vault.Gallery;
 import gallery.templates.contentful.vault.Image;
-import java.util.HashMap;
-import java.util.Map;
 
 public class SlideFragmentAdapter extends FragmentPagerAdapter {
   private final Gallery data;

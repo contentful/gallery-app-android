@@ -16,9 +16,9 @@
   <string name="about_btn_license">Licensing Information</string>
 
   <!-- Contentful URLs -->
-  <string name="url_faq" formatted="false">https://support.contentful.com/hc/en-us/</string>
-  <string name="url_feedback" formatted="false">https://support.contentful.com/hc/en-us/requests/new/</string>
-  <string name="url_contact" formatted="false">https://support.contentful.com/hc/en-us/requests/new/</string>
+  <string name="url_faq" formatted="false">https://contentful.com/faq/</string>
+  <string name="url_feedback" formatted="false">https://github.com/contentful/gallery-app-android/issues/new</string>
+  <string name="url_contact" formatted="false">https://www.contentful.com/contact/</string>
   <string name="url_licensing" formatted="false">http://www.apache.org/licenses/LICENSE-2.0</string>
 
   <!-- Heroes! -->

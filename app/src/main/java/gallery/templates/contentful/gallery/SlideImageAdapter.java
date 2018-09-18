@@ -1,14 +1,17 @@
 package gallery.templates.contentful.gallery;
 
 import android.content.Context;
-import android.support.v4.view.PagerAdapter;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+
 import com.squareup.picasso.Picasso;
+
+import java.util.List;
+
+import androidx.viewpager.widget.PagerAdapter;
 import gallery.templates.contentful.lib.Utils;
 import gallery.templates.contentful.vault.Image;
-import java.util.List;
 
 public class SlideImageAdapter extends PagerAdapter {
   private final List<Image> images;
@@ -29,7 +32,7 @@ public class SlideImageAdapter extends PagerAdapter {
     Context context = container.getContext();
     ImageView imageView = new ImageView(context);
     imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-    Picasso.with(context).load(Utils.imageUrl(images.get(position).photo().url())).into(imageView);
+    Picasso.get().load(Utils.imageUrl(images.get(position).photo().url())).into(imageView);
     container.addView(imageView);
     return imageView;
   }

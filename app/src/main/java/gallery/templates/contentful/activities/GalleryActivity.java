@@ -2,7 +2,6 @@ package gallery.templates.contentful.activities;
 
 import android.animation.Animator;
 import android.animation.ArgbEvaluator;
-import android.annotation.TargetApi;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -14,15 +13,18 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.RippleDrawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.transition.Transition;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewPropertyAnimator;
 import android.widget.ImageView;
+
+import org.parceler.Parcels;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import butterknife.OnClick;
 import butterknife.OnPageChange;
 import gallery.templates.contentful.R;
@@ -40,7 +42,6 @@ import gallery.templates.contentful.ui.LockableViewPager;
 import gallery.templates.contentful.ui.ViewUtils;
 import gallery.templates.contentful.vault.Gallery;
 import gallery.templates.contentful.vault.Image;
-import org.parceler.Parcels;
 
 public class GalleryActivity extends AppCompatActivity {
   private static final ArgbEvaluator EVALUATOR = new ArgbEvaluator();
@@ -57,19 +58,18 @@ public class GalleryActivity extends AppCompatActivity {
 
   private Image image;
 
-  @InjectView(R.id.photo) ImageView photo;
+  @BindView(R.id.photo) ImageView photo;
 
-  @InjectView(R.id.star) FloatingActionButton star;
+  @BindView(R.id.star) FloatingActionButton star;
 
-  @InjectView(R.id.pager) LockableViewPager viewPager;
+  @BindView(R.id.pager) LockableViewPager viewPager;
 
-  @InjectView(R.id.info_container) ViewGroup infoContainer;
+  @BindView(R.id.info_container) ViewGroup infoContainer;
 
-  @TargetApi(Build.VERSION_CODES.LOLLIPOP)
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_gallery);
-    ButterKnife.inject(this);
+    ButterKnife.bind(this);
 
     extractIntentArguments();
     attachGalleryInfoFragment();
@@ -91,7 +91,6 @@ public class GalleryActivity extends AppCompatActivity {
     viewPager.setCurrentItem(index);
   }
 
-  @TargetApi(Build.VERSION_CODES.LOLLIPOP)
   @Override public void onBackPressed() {
     if (Const.HAS_L) {
       if (isShowingInitialImage()) {
@@ -141,7 +140,6 @@ public class GalleryActivity extends AppCompatActivity {
     toggleInfoContainer(v);
   }
 
-  @TargetApi(Build.VERSION_CODES.LOLLIPOP)
   private void initializeViews() {
     viewPager.setCurrentItem(gallery.images().indexOf(image));
     viewPager.setOffscreenPageLimit(getResources().getInteger(
@@ -239,7 +237,6 @@ public class GalleryActivity extends AppCompatActivity {
     return originalIndex == viewPager.getCurrentItem();
   }
 
-  @TargetApi(Build.VERSION_CODES.LOLLIPOP)
   private void colorizeButton(int colorNormal, int colorPressed) {
     Drawable drawable = ContextCompat.getDrawable(this, R.drawable.info_background);
     drawable.setColorFilter(colorNormal, PorterDuff.Mode.MULTIPLY);

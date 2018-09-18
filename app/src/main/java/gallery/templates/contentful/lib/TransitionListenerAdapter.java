@@ -1,10 +1,7 @@
 package gallery.templates.contentful.lib;
 
-import android.annotation.TargetApi;
-import android.os.Build;
 import android.transition.Transition;
 
-@TargetApi(Build.VERSION_CODES.KITKAT)
 public class TransitionListenerAdapter implements Transition.TransitionListener {
   @Override public void onTransitionStart(Transition transition) {
 

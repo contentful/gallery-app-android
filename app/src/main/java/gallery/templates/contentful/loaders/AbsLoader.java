@@ -1,6 +1,6 @@
 package gallery.templates.contentful.loaders;
 
-import android.support.v4.content.AsyncTaskLoader;
+import androidx.loader.content.AsyncTaskLoader;
 import gallery.templates.contentful.App;
 
 /**
